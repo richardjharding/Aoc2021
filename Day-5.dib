@@ -1,0 +1,657 @@
+#!fsharp
+
+type Point = {x: int; y : int}
+
+type Line = {start:Point; endpt: Point}
+
+let lineData = [
+    {start = {x = 427; y= 523 }; endpt= {x =  427; y= 790}};
+{start = {x = 94; y= 639 }; endpt= {x =  94; y= 951}};
+{start = {x = 757; y= 371 }; endpt= {x =  465; y= 663}};
+{start = {x = 503; y= 935 }; endpt= {x =  503; y= 148}};
+{start = {x = 655; y= 565 }; endpt= {x =  655; y= 951}};
+{start = {x = 167; y= 754 }; endpt= {x =  710; y= 211}};
+{start = {x = 634; y= 433 }; endpt= {x =  245; y= 433}};
+{start = {x = 449; y= 889 }; endpt= {x =  449; y= 509}};
+{start = {x = 152; y= 753 }; endpt= {x =  207; y= 808}};
+{start = {x = 301; y= 90 }; endpt= {x =  301; y= 982}};
+{start = {x = 566; y= 405 }; endpt= {x =  482; y= 405}};
+{start = {x = 758; y= 741 }; endpt= {x =  847; y= 652}};
+{start = {x = 342; y= 686 }; endpt= {x =  921; y= 107}};
+{start = {x = 741; y= 317 }; endpt= {x =  741; y= 533}};
+{start = {x = 976; y= 917 }; endpt= {x =  976; y= 664}};
+{start = {x = 273; y= 272 }; endpt= {x =  273; y= 899}};
+{start = {x = 326; y= 616 }; endpt= {x =  326; y= 478}};
+{start = {x = 483; y= 906 }; endpt= {x =  391; y= 814}};
+{start = {x = 20; y= 165 }; endpt= {x =  20; y= 349}};
+{start = {x = 860; y= 533 }; endpt= {x =  860; y= 137}};
+{start = {x = 846; y= 834 }; endpt= {x =  846; y= 610}};
+{start = {x = 155; y= 923 }; endpt= {x =  241; y= 923}};
+{start = {x = 989; y= 984 }; endpt= {x =  17; y= 12}};
+{start = {x = 711; y= 681 }; endpt= {x =  82; y= 52}};
+{start = {x = 312; y= 788 }; endpt= {x =  312; y= 281}};
+{start = {x = 319; y= 746 }; endpt= {x =  892; y= 746}};
+{start = {x = 568; y= 555 }; endpt= {x =  757; y= 555}};
+{start = {x = 659; y= 450 }; endpt= {x =  940; y= 450}};
+{start = {x = 870; y= 260 }; endpt= {x =  870; y= 487}};
+{start = {x = 110; y= 794 }; endpt= {x =  604; y= 794}};
+{start = {x = 509; y= 141 }; endpt= {x =  509; y= 99}};
+{start = {x = 29; y= 68 }; endpt= {x =  29; y= 713}};
+{start = {x = 340; y= 688 }; endpt= {x =  820; y= 688}};
+{start = {x = 428; y= 46 }; endpt= {x =  902; y= 520}};
+{start = {x = 539; y= 525 }; endpt= {x =  539; y= 210}};
+{start = {x = 181; y= 822 }; endpt= {x =  806; y= 822}};
+{start = {x = 551; y= 338 }; endpt= {x =  551; y= 79}};
+{start = {x = 894; y= 542 }; endpt= {x =  894; y= 151}};
+{start = {x = 700; y= 625 }; endpt= {x =  700; y= 60}};
+{start = {x = 143; y= 736 }; endpt= {x =  143; y= 770}};
+{start = {x = 810; y= 975 }; endpt= {x =  54; y= 219}};
+{start = {x = 44; y= 373 }; endpt= {x =  44; y= 514}};
+{start = {x = 849; y= 794 }; endpt= {x =  120; y= 794}};
+{start = {x = 347; y= 690 }; endpt= {x =  97; y= 440}};
+{start = {x = 10; y= 625 }; endpt= {x =  57; y= 625}};
+{start = {x = 541; y= 202 }; endpt= {x =  799; y= 202}};
+{start = {x = 375; y= 491 }; endpt= {x =  809; y= 925}};
+{start = {x = 271; y= 474 }; endpt= {x =  271; y= 905}};
+{start = {x = 980; y= 825 }; endpt= {x =  980; y= 908}};
+{start = {x = 600; y= 751 }; endpt= {x =  624; y= 751}};
+{start = {x = 120; y= 978 }; endpt= {x =  958; y= 140}};
+{start = {x = 262; y= 916 }; endpt= {x =  262; y= 794}};
+{start = {x = 399; y= 350 }; endpt= {x =  399; y= 666}};
+{start = {x = 623; y= 270 }; endpt= {x =  158; y= 735}};
+{start = {x = 585; y= 792 }; endpt= {x =  585; y= 381}};
+{start = {x = 168; y= 34 }; endpt= {x =  168; y= 88}};
+{start = {x = 256; y= 806 }; endpt= {x =  566; y= 806}};
+{start = {x = 196; y= 397 }; endpt= {x =  326; y= 397}};
+{start = {x = 583; y= 677 }; endpt= {x =  172; y= 677}};
+{start = {x = 45; y= 242 }; endpt= {x =  311; y= 508}};
+{start = {x = 530; y= 469 }; endpt= {x =  433; y= 566}};
+{start = {x = 46; y= 101 }; endpt= {x =  877; y= 932}};
+{start = {x = 607; y= 655 }; endpt= {x =  485; y= 777}};
+{start = {x = 773; y= 672 }; endpt= {x =  461; y= 360}};
+{start = {x = 340; y= 30 }; endpt= {x =  659; y= 30}};
+{start = {x = 846; y= 952 }; endpt= {x =  846; y= 917}};
+{start = {x = 457; y= 700 }; endpt= {x =  125; y= 368}};
+{start = {x = 571; y= 656 }; endpt= {x =  561; y= 656}};
+{start = {x = 251; y= 30 }; endpt= {x =  576; y= 30}};
+{start = {x = 79; y= 197 }; endpt= {x =  79; y= 87}};
+{start = {x = 518; y= 51 }; endpt= {x =  518; y= 904}};
+{start = {x = 916; y= 802 }; endpt= {x =  181; y= 67}};
+{start = {x = 23; y= 626 }; endpt= {x =  485; y= 626}};
+{start = {x = 956; y= 106 }; endpt= {x =  956; y= 811}};
+{start = {x = 849; y= 384 }; endpt= {x =  743; y= 278}};
+{start = {x = 893; y= 153 }; endpt= {x =  893; y= 608}};
+{start = {x = 17; y= 989 }; endpt= {x =  933; y= 73}};
+{start = {x = 701; y= 119 }; endpt= {x =  701; y= 704}};
+{start = {x = 494; y= 580 }; endpt= {x =  494; y= 821}};
+{start = {x = 605; y= 740 }; endpt= {x =  605; y= 363}};
+{start = {x = 823; y= 58 }; endpt= {x =  823; y= 166}};
+{start = {x = 250; y= 363 }; endpt= {x =  566; y= 363}};
+{start = {x = 418; y= 178 }; endpt= {x =  783; y= 178}};
+{start = {x = 273; y= 82 }; endpt= {x =  273; y= 115}};
+{start = {x = 545; y= 489 }; endpt= {x =  656; y= 489}};
+{start = {x = 468; y= 671 }; endpt= {x =  966; y= 671}};
+{start = {x = 376; y= 744 }; endpt= {x =  178; y= 942}};
+{start = {x = 62; y= 728 }; endpt= {x =  589; y= 201}};
+{start = {x = 588; y= 150 }; endpt= {x =  467; y= 29}};
+{start = {x = 202; y= 664 }; endpt= {x =  751; y= 115}};
+{start = {x = 519; y= 547 }; endpt= {x =  916; y= 150}};
+{start = {x = 803; y= 483 }; endpt= {x =  380; y= 60}};
+{start = {x = 599; y= 459 }; endpt= {x =  922; y= 459}};
+{start = {x = 162; y= 680 }; endpt= {x =  162; y= 385}};
+{start = {x = 823; y= 94 }; endpt= {x =  18; y= 899}};
+{start = {x = 802; y= 734 }; endpt= {x =  415; y= 347}};
+{start = {x = 115; y= 964 }; endpt= {x =  115; y= 935}};
+{start = {x = 749; y= 595 }; endpt= {x =  749; y= 770}};
+{start = {x = 229; y= 64 }; endpt= {x =  582; y= 64}};
+{start = {x = 103; y= 496 }; endpt= {x =  551; y= 48}};
+{start = {x = 137; y= 581 }; endpt= {x =  707; y= 11}};
+{start = {x = 501; y= 563 }; endpt= {x =  895; y= 957}};
+{start = {x = 59; y= 222 }; endpt= {x =  620; y= 222}};
+{start = {x = 874; y= 249 }; endpt= {x =  874; y= 938}};
+{start = {x = 201; y= 927 }; endpt= {x =  927; y= 201}};
+{start = {x = 630; y= 619 }; endpt= {x =  655; y= 619}};
+{start = {x = 666; y= 331 }; endpt= {x =  413; y= 78}};
+{start = {x = 517; y= 650 }; endpt= {x =  425; y= 558}};
+{start = {x = 803; y= 256 }; endpt= {x =  803; y= 598}};
+{start = {x = 303; y= 460 }; endpt= {x =  606; y= 763}};
+{start = {x = 124; y= 975 }; endpt= {x =  967; y= 132}};
+{start = {x = 867; y= 528 }; endpt= {x =  867; y= 363}};
+{start = {x = 239; y= 140 }; endpt= {x =  239; y= 211}};
+{start = {x = 975; y= 779 }; endpt= {x =  364; y= 168}};
+{start = {x = 971; y= 49 }; endpt= {x =  531; y= 49}};
+{start = {x = 408; y= 932 }; endpt= {x =  143; y= 932}};
+{start = {x = 927; y= 663 }; endpt= {x =  392; y= 128}};
+{start = {x = 497; y= 246 }; endpt= {x =  497; y= 389}};
+{start = {x = 849; y= 935 }; endpt= {x =  15; y= 101}};
+{start = {x = 582; y= 517 }; endpt= {x =  543; y= 517}};
+{start = {x = 410; y= 85 }; endpt= {x =  237; y= 85}};
+{start = {x = 292; y= 316 }; endpt= {x =  841; y= 316}};
+{start = {x = 753; y= 708 }; endpt= {x =  753; y= 38}};
+{start = {x = 266; y= 328 }; endpt= {x =  267; y= 327}};
+{start = {x = 789; y= 980 }; endpt= {x =  16; y= 207}};
+{start = {x = 514; y= 963 }; endpt= {x =  514; y= 180}};
+{start = {x = 865; y= 532 }; endpt= {x =  687; y= 710}};
+{start = {x = 544; y= 620 }; endpt= {x =  956; y= 208}};
+{start = {x = 132; y= 287 }; endpt= {x =  557; y= 287}};
+{start = {x = 268; y= 710 }; endpt= {x =  268; y= 684}};
+{start = {x = 234; y= 746 }; endpt= {x =  234; y= 688}};
+{start = {x = 51; y= 906 }; endpt= {x =  51; y= 911}};
+{start = {x = 191; y= 159 }; endpt= {x =  428; y= 159}};
+{start = {x = 834; y= 956 }; endpt= {x =  834; y= 565}};
+{start = {x = 916; y= 242 }; endpt= {x =  230; y= 928}};
+{start = {x = 227; y= 789 }; endpt= {x =  227; y= 689}};
+{start = {x = 206; y= 767 }; endpt= {x =  705; y= 268}};
+{start = {x = 291; y= 403 }; endpt= {x =  578; y= 403}};
+{start = {x = 35; y= 890 }; endpt= {x =  956; y= 890}};
+{start = {x = 185; y= 618 }; endpt= {x =  402; y= 401}};
+{start = {x = 989; y= 858 }; endpt= {x =  284; y= 858}};
+{start = {x = 391; y= 284 }; endpt= {x =  391; y= 74}};
+{start = {x = 717; y= 158 }; endpt= {x =  670; y= 111}};
+{start = {x = 188; y= 146 }; endpt= {x =  785; y= 743}};
+{start = {x = 602; y= 696 }; endpt= {x =  602; y= 367}};
+{start = {x = 975; y= 972 }; endpt= {x =  975; y= 317}};
+{start = {x = 146; y= 301 }; endpt= {x =  146; y= 205}};
+{start = {x = 328; y= 215 }; endpt= {x =  861; y= 215}};
+{start = {x = 15; y= 653 }; endpt= {x =  990; y= 653}};
+{start = {x = 48; y= 101 }; endpt= {x =  48; y= 34}};
+{start = {x = 929; y= 547 }; endpt= {x =  506; y= 970}};
+{start = {x = 901; y= 519 }; endpt= {x =  670; y= 519}};
+{start = {x = 801; y= 560 }; endpt= {x =  19; y= 560}};
+{start = {x = 953; y= 829 }; endpt= {x =  876; y= 829}};
+{start = {x = 856; y= 317 }; endpt= {x =  856; y= 787}};
+{start = {x = 618; y= 171 }; endpt= {x =  86; y= 703}};
+{start = {x = 823; y= 622 }; endpt= {x =  369; y= 168}};
+{start = {x = 209; y= 291 }; endpt= {x =  846; y= 928}};
+{start = {x = 944; y= 601 }; endpt= {x =  944; y= 544}};
+{start = {x = 678; y= 223 }; endpt= {x =  987; y= 223}};
+{start = {x = 893; y= 143 }; endpt= {x =  54; y= 982}};
+{start = {x = 30; y= 740 }; endpt= {x =  244; y= 740}};
+{start = {x = 974; y= 974 }; endpt= {x =  15; y= 15}};
+{start = {x = 497; y= 557 }; endpt= {x =  63; y= 557}};
+{start = {x = 846; y= 193 }; endpt= {x =  846; y= 964}};
+{start = {x = 83; y= 119 }; endpt= {x =  946; y= 982}};
+{start = {x = 864; y= 179 }; endpt= {x =  864; y= 387}};
+{start = {x = 583; y= 312 }; endpt= {x =  77; y= 818}};
+{start = {x = 612; y= 154 }; endpt= {x =  612; y= 641}};
+{start = {x = 487; y= 136 }; endpt= {x =  487; y= 938}};
+{start = {x = 502; y= 611 }; endpt= {x =  215; y= 898}};
+{start = {x = 648; y= 978 }; endpt= {x =  648; y= 885}};
+{start = {x = 373; y= 372 }; endpt= {x =  318; y= 372}};
+{start = {x = 582; y= 988 }; endpt= {x =  168; y= 574}};
+{start = {x = 453; y= 261 }; endpt= {x =  899; y= 261}};
+{start = {x = 467; y= 578 }; endpt= {x =  33; y= 578}};
+{start = {x = 876; y= 138 }; endpt= {x =  683; y= 331}};
+{start = {x = 708; y= 248 }; endpt= {x =  132; y= 824}};
+{start = {x = 686; y= 56 }; endpt= {x =  686; y= 211}};
+{start = {x = 687; y= 964 }; endpt= {x =  687; y= 485}};
+{start = {x = 626; y= 76 }; endpt= {x =  626; y= 222}};
+{start = {x = 630; y= 176 }; endpt= {x =  630; y= 485}};
+{start = {x = 968; y= 608 }; endpt= {x =  968; y= 382}};
+{start = {x = 943; y= 69 }; endpt= {x =  943; y= 856}};
+{start = {x = 173; y= 344 }; endpt= {x =  173; y= 902}};
+{start = {x = 193; y= 918 }; endpt= {x =  326; y= 918}};
+{start = {x = 811; y= 748 }; endpt= {x =  379; y= 316}};
+{start = {x = 484; y= 941 }; endpt= {x =  113; y= 570}};
+{start = {x = 277; y= 635 }; endpt= {x =  156; y= 514}};
+{start = {x = 770; y= 573 }; endpt= {x =  691; y= 573}};
+{start = {x = 37; y= 475 }; endpt= {x =  464; y= 475}};
+{start = {x = 720; y= 856 }; endpt= {x =  676; y= 856}};
+{start = {x = 988; y= 13 }; endpt= {x =  25; y= 976}};
+{start = {x = 414; y= 74 }; endpt= {x =  140; y= 74}};
+{start = {x = 169; y= 158 }; endpt= {x =  29; y= 298}};
+{start = {x = 611; y= 910 }; endpt= {x =  611; y= 718}};
+{start = {x = 851; y= 161 }; endpt= {x =  507; y= 161}};
+{start = {x = 76; y= 969 }; endpt= {x =  76; y= 114}};
+{start = {x = 270; y= 243 }; endpt= {x =  976; y= 949}};
+{start = {x = 375; y= 607 }; endpt= {x =  325; y= 657}};
+{start = {x = 738; y= 450 }; endpt= {x =  196; y= 450}};
+{start = {x = 153; y= 776 }; endpt= {x =  153; y= 325}};
+{start = {x = 862; y= 123 }; endpt= {x =  862; y= 535}};
+{start = {x = 705; y= 933 }; endpt= {x =  931; y= 933}};
+{start = {x = 900; y= 26 }; endpt= {x =  35; y= 891}};
+{start = {x = 870; y= 66 }; endpt= {x =  79; y= 857}};
+{start = {x = 815; y= 569 }; endpt= {x =  347; y= 569}};
+{start = {x = 950; y= 290 }; endpt= {x =  757; y= 290}};
+{start = {x = 719; y= 446 }; endpt= {x =  317; y= 848}};
+{start = {x = 243; y= 531 }; endpt= {x =  671; y= 531}};
+{start = {x = 320; y= 807 }; endpt= {x =  380; y= 807}};
+{start = {x = 221; y= 984 }; endpt= {x =  221; y= 858}};
+{start = {x = 832; y= 308 }; endpt= {x =  832; y= 950}};
+{start = {x = 522; y= 694 }; endpt= {x =  584; y= 694}};
+{start = {x = 412; y= 48 }; endpt= {x =  412; y= 328}};
+{start = {x = 898; y= 690 }; endpt= {x =  646; y= 690}};
+{start = {x = 602; y= 191 }; endpt= {x =  106; y= 191}};
+{start = {x = 58; y= 961 }; endpt= {x =  58; y= 879}};
+{start = {x = 177; y= 413 }; endpt= {x =  147; y= 383}};
+{start = {x = 48; y= 159 }; endpt= {x =  48; y= 639}};
+{start = {x = 18; y= 935 }; endpt= {x =  883; y= 70}};
+{start = {x = 26; y= 68 }; endpt= {x =  406; y= 68}};
+{start = {x = 579; y= 73 }; endpt= {x =  579; y= 523}};
+{start = {x = 975; y= 825 }; endpt= {x =  975; y= 737}};
+{start = {x = 390; y= 125 }; endpt= {x =  737; y= 472}};
+{start = {x = 127; y= 179 }; endpt= {x =  127; y= 111}};
+{start = {x = 506; y= 557 }; endpt= {x =  576; y= 487}};
+{start = {x = 161; y= 210 }; endpt= {x =  324; y= 47}};
+{start = {x = 524; y= 165 }; endpt= {x =  524; y= 67}};
+{start = {x = 938; y= 790 }; endpt= {x =  184; y= 36}};
+{start = {x = 302; y= 431 }; endpt= {x =  548; y= 677}};
+{start = {x = 559; y= 363 }; endpt= {x =  559; y= 913}};
+{start = {x = 936; y= 10 }; endpt= {x =  176; y= 770}};
+{start = {x = 828; y= 976 }; endpt= {x =  657; y= 976}};
+{start = {x = 864; y= 14 }; endpt= {x =  864; y= 607}};
+{start = {x = 28; y= 46 }; endpt= {x =  28; y= 347}};
+{start = {x = 732; y= 742 }; endpt= {x =  732; y= 615}};
+{start = {x = 91; y= 712 }; endpt= {x =  91; y= 279}};
+{start = {x = 982; y= 884 }; endpt= {x =  772; y= 674}};
+{start = {x = 917; y= 47 }; endpt= {x =  683; y= 47}};
+{start = {x = 631; y= 697 }; endpt= {x =  83; y= 697}};
+{start = {x = 463; y= 413 }; endpt= {x =  463; y= 949}};
+{start = {x = 719; y= 348 }; endpt= {x =  197; y= 870}};
+{start = {x = 980; y= 25 }; endpt= {x =  24; y= 981}};
+{start = {x = 64; y= 608 }; endpt= {x =  410; y= 954}};
+{start = {x = 103; y= 882 }; endpt= {x =  103; y= 842}};
+{start = {x = 279; y= 10 }; endpt= {x =  830; y= 561}};
+{start = {x = 409; y= 573 }; endpt= {x =  409; y= 247}};
+{start = {x = 673; y= 291 }; endpt= {x =  222; y= 291}};
+{start = {x = 315; y= 143 }; endpt= {x =  942; y= 770}};
+{start = {x = 216; y= 89 }; endpt= {x =  80; y= 225}};
+{start = {x = 134; y= 936 }; endpt= {x =  967; y= 103}};
+{start = {x = 387; y= 566 }; endpt= {x =  82; y= 566}};
+{start = {x = 282; y= 259 }; endpt= {x =  862; y= 839}};
+{start = {x = 930; y= 225 }; endpt= {x =  930; y= 775}};
+{start = {x = 460; y= 370 }; endpt= {x =  460; y= 922}};
+{start = {x = 276; y= 254 }; endpt= {x =  518; y= 496}};
+{start = {x = 647; y= 881 }; endpt= {x =  293; y= 527}};
+{start = {x = 983; y= 977 }; endpt= {x =  90; y= 84}};
+{start = {x = 336; y= 836 }; endpt= {x =  336; y= 392}};
+{start = {x = 96; y= 888 }; endpt= {x =  963; y= 21}};
+{start = {x = 42; y= 47 }; endpt= {x =  978; y= 983}};
+{start = {x = 923; y= 280 }; endpt= {x =  726; y= 83}};
+{start = {x = 311; y= 486 }; endpt= {x =  505; y= 292}};
+{start = {x = 496; y= 637 }; endpt= {x =  861; y= 637}};
+{start = {x = 575; y= 438 }; endpt= {x =  575; y= 498}};
+{start = {x = 228; y= 754 }; endpt= {x =  228; y= 599}};
+{start = {x = 965; y= 963 }; endpt= {x =  21; y= 19}};
+{start = {x = 834; y= 171 }; endpt= {x =  730; y= 171}};
+{start = {x = 497; y= 234 }; endpt= {x =  497; y= 448}};
+{start = {x = 977; y= 970 }; endpt= {x =  977; y= 618}};
+{start = {x = 335; y= 422 }; endpt= {x =  335; y= 640}};
+{start = {x = 931; y= 954 }; endpt= {x =  36; y= 59}};
+{start = {x = 140; y= 966 }; endpt= {x =  871; y= 235}};
+{start = {x = 352; y= 88 }; endpt= {x =  449; y= 88}};
+{start = {x = 631; y= 332 }; endpt= {x =  735; y= 332}};
+{start = {x = 765; y= 823 }; endpt= {x =  48; y= 106}};
+{start = {x = 496; y= 685 }; endpt= {x =  103; y= 685}};
+{start = {x = 89; y= 416 }; endpt= {x =  89; y= 37}};
+{start = {x = 121; y= 544 }; endpt= {x =  569; y= 544}};
+{start = {x = 643; y= 712 }; endpt= {x =  596; y= 712}};
+{start = {x = 662; y= 656 }; endpt= {x =  739; y= 656}};
+{start = {x = 42; y= 386 }; endpt= {x =  42; y= 697}};
+{start = {x = 959; y= 875 }; endpt= {x =  959; y= 527}};
+{start = {x = 874; y= 967 }; endpt= {x =  120; y= 213}};
+{start = {x = 962; y= 649 }; endpt= {x =  240; y= 649}};
+{start = {x = 627; y= 714 }; endpt= {x =  266; y= 714}};
+{start = {x = 148; y= 301 }; endpt= {x =  148; y= 383}};
+{start = {x = 883; y= 491 }; endpt= {x =  883; y= 605}};
+{start = {x = 242; y= 401 }; endpt= {x =  348; y= 401}};
+{start = {x = 660; y= 931 }; endpt= {x =  420; y= 931}};
+{start = {x = 475; y= 72 }; endpt= {x =  955; y= 552}};
+{start = {x = 912; y= 949 }; endpt= {x =  912; y= 881}};
+{start = {x = 928; y= 330 }; endpt= {x =  45; y= 330}};
+{start = {x = 474; y= 203 }; endpt= {x =  131; y= 203}};
+{start = {x = 805; y= 459 }; endpt= {x =  818; y= 459}};
+{start = {x = 534; y= 645 }; endpt= {x =  639; y= 750}};
+{start = {x = 68; y= 911 }; endpt= {x =  933; y= 46}};
+{start = {x = 717; y= 276 }; endpt= {x =  21; y= 972}};
+{start = {x = 233; y= 615 }; endpt= {x =  957; y= 615}};
+{start = {x = 902; y= 495 }; endpt= {x =  902; y= 867}};
+{start = {x = 230; y= 427 }; endpt= {x =  230; y= 421}};
+{start = {x = 630; y= 917 }; endpt= {x =  845; y= 917}};
+{start = {x = 884; y= 903 }; endpt= {x =  34; y= 53}};
+{start = {x = 157; y= 205 }; endpt= {x =  157; y= 409}};
+{start = {x = 857; y= 588 }; endpt= {x =  608; y= 588}};
+{start = {x = 422; y= 863 }; endpt= {x =  422; y= 469}};
+{start = {x = 890; y= 83 }; endpt= {x =  722; y= 251}};
+{start = {x = 546; y= 318 }; endpt= {x =  138; y= 726}};
+{start = {x = 691; y= 881 }; endpt= {x =  52; y= 242}};
+{start = {x = 171; y= 435 }; endpt= {x =  209; y= 435}};
+{start = {x = 978; y= 15 }; endpt= {x =  702; y= 15}};
+{start = {x = 581; y= 86 }; endpt= {x =  581; y= 282}};
+{start = {x = 61; y= 767 }; endpt= {x =  61; y= 903}};
+{start = {x = 835; y= 289 }; endpt= {x =  835; y= 941}};
+{start = {x = 176; y= 351 }; endpt= {x =  707; y= 882}};
+{start = {x = 571; y= 84 }; endpt= {x =  571; y= 788}};
+{start = {x = 700; y= 373 }; endpt= {x =  700; y= 650}};
+{start = {x = 40; y= 40 }; endpt= {x =  945; y= 945}};
+{start = {x = 82; y= 616 }; endpt= {x =  809; y= 616}};
+{start = {x = 351; y= 402 }; endpt= {x =  455; y= 402}};
+{start = {x = 517; y= 242 }; endpt= {x =  73; y= 686}};
+{start = {x = 489; y= 795 }; endpt= {x =  814; y= 795}};
+{start = {x = 543; y= 734 }; endpt= {x =  611; y= 734}};
+{start = {x = 688; y= 849 }; endpt= {x =  688; y= 571}};
+{start = {x = 631; y= 903 }; endpt= {x =  883; y= 903}};
+{start = {x = 312; y= 636 }; endpt= {x =  667; y= 281}};
+{start = {x = 213; y= 575 }; endpt= {x =  699; y= 89}};
+{start = {x = 752; y= 128 }; endpt= {x =  161; y= 719}};
+{start = {x = 754; y= 931 }; endpt= {x =  754; y= 474}};
+{start = {x = 748; y= 666 }; endpt= {x =  748; y= 54}};
+{start = {x = 123; y= 667 }; endpt= {x =  57; y= 667}};
+{start = {x = 140; y= 497 }; endpt= {x =  140; y= 644}};
+{start = {x = 634; y= 961 }; endpt= {x =  187; y= 514}};
+{start = {x = 822; y= 865 }; endpt= {x =  822; y= 126}};
+{start = {x = 58; y= 162 }; endpt= {x =  632; y= 736}};
+{start = {x = 417; y= 164 }; endpt= {x =  166; y= 164}};
+{start = {x = 943; y= 597 }; endpt= {x =  943; y= 274}};
+{start = {x = 355; y= 756 }; endpt= {x =  355; y= 167}};
+{start = {x = 340; y= 546 }; endpt= {x =  232; y= 438}};
+{start = {x = 166; y= 125 }; endpt= {x =  166; y= 96}};
+{start = {x = 354; y= 394 }; endpt= {x =  354; y= 579}};
+{start = {x = 147; y= 844 }; endpt= {x =  155; y= 844}};
+{start = {x = 652; y= 723 }; endpt= {x =  719; y= 656}};
+{start = {x = 584; y= 582 }; endpt= {x =  667; y= 665}};
+{start = {x = 514; y= 373 }; endpt= {x =  685; y= 202}};
+{start = {x = 308; y= 404 }; endpt= {x =  966; y= 404}};
+{start = {x = 124; y= 179 }; endpt= {x =  916; y= 971}};
+{start = {x = 706; y= 597 }; endpt= {x =  455; y= 597}};
+{start = {x = 52; y= 822 }; endpt= {x =  510; y= 364}};
+{start = {x = 419; y= 900 }; endpt= {x =  860; y= 900}};
+{start = {x = 153; y= 649 }; endpt= {x =  872; y= 649}};
+{start = {x = 915; y= 160 }; endpt= {x =  56; y= 160}};
+{start = {x = 422; y= 346 }; endpt= {x =  422; y= 38}};
+{start = {x = 940; y= 73 }; endpt= {x =  940; y= 784}};
+{start = {x = 922; y= 581 }; endpt= {x =  922; y= 753}};
+{start = {x = 949; y= 821 }; endpt= {x =  949; y= 621}};
+{start = {x = 591; y= 778 }; endpt= {x =  145; y= 778}};
+{start = {x = 93; y= 685 }; endpt= {x =  164; y= 756}};
+{start = {x = 287; y= 469 }; endpt= {x =  287; y= 948}};
+{start = {x = 953; y= 952 }; endpt= {x =  446; y= 445}};
+{start = {x = 935; y= 47 }; endpt= {x =  12; y= 970}};
+{start = {x = 458; y= 109 }; endpt= {x =  458; y= 639}};
+{start = {x = 71; y= 643 }; endpt= {x =  644; y= 70}};
+{start = {x = 812; y= 214 }; endpt= {x =  812; y= 655}};
+{start = {x = 488; y= 496 }; endpt= {x =  158; y= 496}};
+{start = {x = 113; y= 868 }; endpt= {x =  755; y= 226}};
+{start = {x = 666; y= 429 }; endpt= {x =  666; y= 920}};
+{start = {x = 962; y= 246 }; endpt= {x =  517; y= 246}};
+{start = {x = 400; y= 261 }; endpt= {x =  400; y= 713}};
+{start = {x = 601; y= 617 }; endpt= {x =  943; y= 275}};
+{start = {x = 904; y= 847 }; endpt= {x =  120; y= 63}};
+{start = {x = 556; y= 334 }; endpt= {x =  278; y= 612}};
+{start = {x = 416; y= 463 }; endpt= {x =  59; y= 463}};
+{start = {x = 724; y= 401 }; endpt= {x =  871; y= 548}};
+{start = {x = 701; y= 210 }; endpt= {x =  426; y= 485}};
+{start = {x = 786; y= 116 }; endpt= {x =  786; y= 904}};
+{start = {x = 976; y= 979 }; endpt= {x =  157; y= 160}};
+{start = {x = 674; y= 377 }; endpt= {x =  674; y= 891}};
+{start = {x = 321; y= 829 }; endpt= {x =  891; y= 829}};
+{start = {x = 404; y= 84 }; endpt= {x =  404; y= 800}};
+{start = {x = 975; y= 850 }; endpt= {x =  906; y= 781}};
+{start = {x = 753; y= 331 }; endpt= {x =  978; y= 331}};
+{start = {x = 87; y= 240 }; endpt= {x =  87; y= 383}};
+{start = {x = 167; y= 390 }; endpt= {x =  167; y= 20}};
+{start = {x = 258; y= 931 }; endpt= {x =  107; y= 780}};
+{start = {x = 672; y= 313 }; endpt= {x =  696; y= 313}};
+{start = {x = 589; y= 88 }; endpt= {x =  589; y= 13}};
+{start = {x = 637; y= 65 }; endpt= {x =  637; y= 808}};
+{start = {x = 532; y= 610 }; endpt= {x =  532; y= 756}};
+{start = {x = 612; y= 482 }; endpt= {x =  318; y= 482}};
+{start = {x = 522; y= 322 }; endpt= {x =  135; y= 322}};
+{start = {x = 89; y= 49 }; endpt= {x =  89; y= 679}};
+{start = {x = 475; y= 506 }; endpt= {x =  475; y= 973}};
+{start = {x = 385; y= 348 }; endpt= {x =  229; y= 348}};
+{start = {x = 633; y= 978 }; endpt= {x =  633; y= 255}};
+{start = {x = 978; y= 833 }; endpt= {x =  978; y= 436}};
+{start = {x = 746; y= 553 }; endpt= {x =  707; y= 553}};
+{start = {x = 970; y= 820 }; endpt= {x =  970; y= 548}};
+{start = {x = 589; y= 59 }; endpt= {x =  589; y= 19}};
+{start = {x = 674; y= 890 }; endpt= {x =  16; y= 890}};
+{start = {x = 838; y= 315 }; endpt= {x =  413; y= 740}};
+{start = {x = 39; y= 129 }; endpt= {x =  860; y= 950}};
+{start = {x = 923; y= 755 }; endpt= {x =  425; y= 257}};
+{start = {x = 757; y= 929 }; endpt= {x =  940; y= 746}};
+{start = {x = 639; y= 390 }; endpt= {x =  104; y= 925}};
+{start = {x = 650; y= 512 }; endpt= {x =  260; y= 902}};
+{start = {x = 718; y= 90 }; endpt= {x =  987; y= 90}};
+{start = {x = 352; y= 228 }; endpt= {x =  795; y= 671}};
+{start = {x = 141; y= 629 }; endpt= {x =  491; y= 279}};
+{start = {x = 755; y= 616 }; endpt= {x =  368; y= 616}};
+{start = {x = 117; y= 113 }; endpt= {x =  707; y= 703}};
+{start = {x = 206; y= 73 }; endpt= {x =  926; y= 793}};
+{start = {x = 372; y= 415 }; endpt= {x =  372; y= 130}};
+{start = {x = 894; y= 632 }; endpt= {x =  611; y= 632}};
+{start = {x = 974; y= 554 }; endpt= {x =  878; y= 554}};
+{start = {x = 823; y= 710 }; endpt= {x =  823; y= 972}};
+{start = {x = 730; y= 711 }; endpt= {x =  582; y= 859}};
+{start = {x = 94; y= 912 }; endpt= {x =  108; y= 912}};
+{start = {x = 782; y= 190 }; endpt= {x =  88; y= 884}};
+{start = {x = 668; y= 567 }; endpt= {x =  336; y= 567}};
+{start = {x = 87; y= 266 }; endpt= {x =  327; y= 506}};
+{start = {x = 738; y= 303 }; endpt= {x =  36; y= 303}};
+{start = {x = 320; y= 358 }; endpt= {x =  445; y= 358}};
+{start = {x = 566; y= 725 }; endpt= {x =  695; y= 725}};
+{start = {x = 94; y= 364 }; endpt= {x =  94; y= 64}};
+{start = {x = 884; y= 184 }; endpt= {x =  159; y= 909}};
+{start = {x = 947; y= 575 }; endpt= {x =  947; y= 662}};
+{start = {x = 658; y= 741 }; endpt= {x =  658; y= 470}};
+{start = {x = 512; y= 776 }; endpt= {x =  512; y= 960}};
+{start = {x = 96; y= 757 }; endpt= {x =  950; y= 757}};
+{start = {x = 349; y= 604 }; endpt= {x =  349; y= 760}};
+{start = {x = 459; y= 247 }; endpt= {x =  355; y= 143}};
+{start = {x = 90; y= 12 }; endpt= {x =  95; y= 12}};
+{start = {x = 28; y= 27 }; endpt= {x =  981; y= 980}};
+{start = {x = 388; y= 959 }; endpt= {x =  508; y= 959}};
+{start = {x = 704; y= 194 }; endpt= {x =  148; y= 194}};
+{start = {x = 349; y= 546 }; endpt= {x =  349; y= 259}};
+{start = {x = 30; y= 38 }; endpt= {x =  720; y= 728}};
+{start = {x = 307; y= 631 }; endpt= {x =  307; y= 282}};
+{start = {x = 520; y= 417 }; endpt= {x =  154; y= 417}};
+{start = {x = 746; y= 771 }; endpt= {x =  924; y= 771}};
+{start = {x = 838; y= 932 }; endpt= {x =  20; y= 114}};
+{start = {x = 406; y= 141 }; endpt= {x =  406; y= 75}};
+{start = {x = 15; y= 35 }; endpt= {x =  963; y= 983}};
+{start = {x = 264; y= 143 }; endpt= {x =  948; y= 827}};
+{start = {x = 545; y= 899 }; endpt= {x =  742; y= 899}};
+{start = {x = 759; y= 356 }; endpt= {x =  309; y= 356}};
+{start = {x = 686; y= 707 }; endpt= {x =  224; y= 245}};
+{start = {x = 226; y= 985 }; endpt= {x =  962; y= 249}};
+{start = {x = 826; y= 628 }; endpt= {x =  826; y= 637}};
+{start = {x = 985; y= 329 }; endpt= {x =  683; y= 631}};
+{start = {x = 586; y= 283 }; endpt= {x =  586; y= 258}};
+{start = {x = 602; y= 703 }; endpt= {x =  243; y= 703}};
+{start = {x = 419; y= 883 }; endpt= {x =  419; y= 556}};
+{start = {x = 475; y= 375 }; endpt= {x =  211; y= 111}};
+{start = {x = 981; y= 15 }; endpt= {x =  19; y= 977}};
+{start = {x = 989; y= 10 }; endpt= {x =  10; y= 989}};
+{start = {x = 238; y= 350 }; endpt= {x =  479; y= 591}};
+{start = {x = 720; y= 714 }; endpt= {x =  603; y= 714}};
+{start = {x = 969; y= 985 }; endpt= {x =  35; y= 51}};
+{start = {x = 844; y= 356 }; endpt= {x =  837; y= 349}};
+{start = {x = 450; y= 354 }; endpt= {x =  450; y= 834}};
+{start = {x = 385; y= 870 }; endpt= {x =  385; y= 758}};
+{start = {x = 911; y= 856 }; endpt= {x =  89; y= 34}};
+{start = {x = 948; y= 124 }; endpt= {x =  989; y= 124}};
+{start = {x = 439; y= 556 }; endpt= {x =  439; y= 310}};
+{start = {x = 990; y= 233 }; endpt= {x =  990; y= 633}};
+{start = {x = 747; y= 723 }; endpt= {x =  943; y= 527}};
+{start = {x = 418; y= 23 }; endpt= {x =  804; y= 23}};
+{start = {x = 876; y= 96 }; endpt= {x =  38; y= 934}};
+{start = {x = 556; y= 92 }; endpt= {x =  532; y= 92}};
+{start = {x = 727; y= 155 }; endpt= {x =  727; y= 279}};
+{start = {x = 674; y= 545 }; endpt= {x =  940; y= 811}};
+{start = {x = 118; y= 879 }; endpt= {x =  420; y= 879}};
+{start = {x = 141; y= 50 }; endpt= {x =  426; y= 335}};
+{start = {x = 591; y= 180 }; endpt= {x =  591; y= 537}};
+{start = {x = 662; y= 511 }; endpt= {x =  681; y= 511}};
+{start = {x = 776; y= 858 }; endpt= {x =  776; y= 956}};
+{start = {x = 872; y= 329 }; endpt= {x =  87; y= 329}};
+{start = {x = 183; y= 985 }; endpt= {x =  114; y= 985}};
+{start = {x = 186; y= 179 }; endpt= {x =  186; y= 801}};
+{start = {x = 354; y= 933 }; endpt= {x =  491; y= 933}};
+{start = {x = 10; y= 223 }; endpt= {x =  759; y= 972}};
+{start = {x = 112; y= 626 }; endpt= {x =  702; y= 36}};
+{start = {x = 498; y= 78 }; endpt= {x =  161; y= 78}};
+{start = {x = 196; y= 61 }; endpt= {x =  814; y= 679}};
+{start = {x = 629; y= 71 }; endpt= {x =  116; y= 71}};
+{start = {x = 23; y= 281 }; endpt= {x =  23; y= 32}};
+{start = {x = 819; y= 810 }; endpt= {x =  432; y= 423}};
+{start = {x = 187; y= 276 }; endpt= {x =  187; y= 912}};
+{start = {x = 95; y= 683 }; endpt= {x =  576; y= 683}};
+{start = {x = 125; y= 813 }; endpt= {x =  856; y= 82}};
+{start = {x = 98; y= 882 }; endpt= {x =  140; y= 882}};
+{start = {x = 843; y= 909 }; endpt= {x =  198; y= 909}};
+{start = {x = 192; y= 904 }; endpt= {x =  192; y= 335}};
+{start = {x = 375; y= 342 }; endpt= {x =  375; y= 668}};
+{start = {x = 61; y= 804 }; endpt= {x =  61; y= 832}};
+{start = {x = 475; y= 387 }; endpt= {x =  966; y= 878}};
+{start = {x = 822; y= 740 }; endpt= {x =  822; y= 186}}
+]
+
+#!fsharp
+
+let spanningHorizPoints point1 point2 =
+    
+    if point1.x > point2.x then
+        let dist = (point1.x - point2.x) 
+        //Console.WriteLine (dist.ToString())
+        [0..dist] |> Seq.map  (fun i -> {x = point1.x - i ; y=  point1.y})        
+    else
+        let dist = point2.x - point1.x
+        //Console.WriteLine (dist.ToString())
+        [0..dist] |> Seq.map  (fun i -> {x = point1.x + i ; y=  point1.y})
+
+let spanningVertPoints point1 point2 =
+    
+    if point1.y > point2.y then
+        let dist = (point1.y - point2.y) 
+        //Console.WriteLine (dist.ToString())
+        [0..dist] |> Seq.map  (fun i -> {x = point1.x ; y=  point1.y - i })        
+    else
+        let dist = point2.y - point1.y
+        //Console.WriteLine (dist.ToString())
+        [0..dist] |> Seq.map  (fun i -> {x = point1.x ; y=  point1.y  + i})
+
+let isDiag45 point1 point2 = 
+    let yDist =
+        if point1.y > point2.y then
+            (point1.y - point2.y)  
+        else
+            point2.y - point1.y
+
+    let xDist = 
+        if point1.x > point2.x then
+            point1.x - point2.x
+        else
+            point2.x - point1.x
+    xDist = yDist
+
+let diagPoints point1 point2 = 
+    // put poinst in order of bottom left
+    // find x or y dist (will be the same)
+    if (point1.x < point2.x)  then
+        //point1 is left - check for top or bottom
+        if point1.y < point2.y then
+            //point 1 bottom left
+            let dist = (point2.x - point1.x)
+            [0..dist] |> Seq.map  (fun i -> {x = point1.x + i ; y=  point1.y + i }) 
+        else
+            //point 1 top left
+            let dist = (point2.x - point1.x)
+            [0..dist] |> Seq.map  (fun i -> {x = point1.x + i ; y=  point1.y - i })
+    else
+        //point2 is left - check for top or bottom
+        if point2.y < point1.y then
+            // point 2 bottom left
+            let dist = (point1.x - point2.x)
+            [0..dist] |> Seq.map  (fun i -> {x = point1.x - i ; y=  point1.y - i }) 
+        else
+            // point 2 top left
+            let dist = (point1.x - point2.x)
+            [0..dist] |> Seq.map  (fun i -> {x = point1.x - i ; y=  point1.y + i })
+    
+
+
+let pointsOnLine (line:Line) = 
+    if(line.start.x = line.endpt.x) then
+        //vertical
+        spanningVertPoints line.start line.endpt    
+    elif line.start.y = line.endpt.y then
+        spanningHorizPoints line.start line.endpt
+    else
+        let isDiag = isDiag45 line.start line.endpt
+        //Console.WriteLine (isDiag.ToString())
+        if isDiag then
+            diagPoints line.start line.endpt
+        else
+            []
+
+
+
+let testLineH = {start = {x = 7; y = 7}; endpt = {x = 9; y = 7}} // should give 9,7 8,7 7,7
+let testLineV = {start = {x = 1; y = 1}; endpt = {x = 1; y = 3}} // 1,1, 1,2, and 1,3
+let testDiage1 = {start = {x = 1; y = 1}; endpt = {x = 3; y = 3}}
+let testDiage = {start = {x = 9; y = 7}; endpt = {x = 7; y = 9}} //9,7, 8,8, and 7,9
+
+pointsOnLine testDiage
+
+#!markdown
+
+test input
+
+#!fsharp
+
+let exampleCoordArray = [{start = {x = 0; y= 9 }; endpt= {x =  5; y= 9}};
+{start = {x = 8; y= 0 }; endpt= {x =  0; y= 8}};
+{start = {x = 9; y= 4 }; endpt= {x =  3; y= 4}};
+{start = {x = 2; y= 2 }; endpt= {x =  2; y= 1}};
+{start = {x = 7; y= 0 }; endpt= {x =  7; y= 4}};
+{start = {x = 6; y= 4 }; endpt= {x =  2; y= 0}};
+{start = {x = 0; y= 9 }; endpt= {x =  2; y= 9}};
+{start = {x = 3; y= 4 }; endpt= {x =  1; y= 4}};
+{start = {x = 0; y= 0 }; endpt= {x =  8; y= 8}};
+{start = {x = 5; y= 5 }; endpt= {x =  8; y= 2}};]
+
+#!fsharp
+
+let rec allPointsAllLines (lines: Line list) (acc: Point list) = 
+    match lines with
+    | [] -> acc
+    | head :: tail ->
+        let points = pointsOnLine head |> Seq.toList
+        allPointsAllLines tail (List.append acc points)
+
+let test = allPointsAllLines [testLineH ; testLineV] []
+
+//test
+
+#!fsharp
+
+let allPoints = allPointsAllLines exampleCoordArray []
+
+allPoints.Length
+
+let groups = allPoints |> List.groupBy (fun p -> p)
+
+let count  = groups |> List.filter (fun f ->
+                                let x = snd f
+                                x.Length > 1
+                             )
+
+allPoints.Length //should be 26?
+count.Length
+
+#!fsharp
+
+let allPoints = allPointsAllLines lineData []
+
+allPoints.Length
+
+let groups = allPoints |> List.groupBy (fun p -> p)
+
+let count  = groups |> List.filter (fun f ->
+                                let x = snd f
+                                x.Length > 1
+                             )
+
+allPoints.Length 
+count.Length
