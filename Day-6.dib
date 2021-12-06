@@ -1,0 +1,114 @@
+#!fsharp
+
+let exampleData = [ 3; 4; 3; 1; 2 ]
+
+let exampleSeq = List.toSeq exampleData
+
+let exampleArray = exampleData |> List.toArray
+
+let inputData = [4;1;1;4;1;2;1;4;1;3;4;4;1;5;5;1;3;1;1;1;4;4;3;1;5;3;1;2;5;1;1;5;1;1;4;1;1;1;1;2;1;5;3;4;4;1;1;1;1;1;1;1;1;1;2;1;1;1;1;1;5;1;1;1;4;1;2;3;5;1;2;2;4;1;4;4;4;1;2;5;1;2;1;1;1;1;1;1;4;1;1;4;3;4;2;1;3;1;1;1;3;5;5;4;3;4;1;5;1;1;1;2;2;1;3;1;2;4;1;1;3;3;1;3;3;1;1;3;1;5;1;1;3;1;1;1;5;4;1;1;1;1;4;1;1;3;5;4;3;1;1;5;4;1;1;2;5;4;2;1;4;1;1;1;1;3;1;1;1;1;4;1;1;1;1;2;4;1;1;1;1;3;1;1;5;1;1;1;1;1;1;4;2;1;3;1;1;1;2;4;2;3;1;4;1;2;1;4;2;1;4;4;1;5;1;1;4;4;1;2;2;1;1;1;1;1;1;1;1;1;1;1;4;5;4;1;3;1;3;1;1;1;5;3;5;5;2;2;1;4;1;4;2;1;4;1;2;1;1;2;1;1;5;4;2;1;1;1;2;4;1;1;1;1;2;1;1;5;1;1;2;2;5;1;1;1;1;1;2;4;2;3;1;2;1;5;4;5;1;4]
+
+#!markdown
+
+Types
+
+#!fsharp
+
+type Fish = {timer: int}
+
+let exampleFish = exampleData |> List.map (fun i -> {timer = i})
+
+let FishToString (fishes: Fish list) =
+    let ints = fishes |> List.map (fun f -> f.timer)
+    Console.WriteLine (ints.ToDisplayString())
+
+#!markdown
+
+map over, decrement each fish, zero - 6
+then for each 6 in new list add append an 8
+
+#!fsharp
+
+let rec tick (fishes: int seq) (days:int) =
+    //printfn "Days: %i" days
+    match days with
+    | 0 -> fishes
+    | _ -> 
+            //printfn "before transform"
+            //Console.WriteLine (fishes.ToDisplayString())
+            //FishToString fishes
+            let numberOfNewFish  = fishes |> Seq.filter (fun f -> f = 0) |> Seq.length
+            let transformed = fishes |> Seq.map (fun f -> 
+                                                        match f with                                                        
+                                                        | 0 -> 6
+                                                        | _ -> f - 1
+                                                        )
+            //printfn "after transform"
+            
+            //printfn "Number of new fish: %s" (numberOfNewFish.ToString())
+            let newFish = [| 1..numberOfNewFish |] |> Seq.map (fun i ->  8)
+            //printfn "fish: %i, new fish: %i" transformed.Length newFish.Length
+            let appendedList = (Seq.append transformed newFish  )
+            let newDays = (days - 1)
+            match (Seq.length newFish) with
+            | 0 -> tick transformed  newDays
+            | _ -> tick appendedList newDays
+            
+    
+//exampleFish.ToDisplayString()
+let split = Seq.splitInto 5 exampleSeq
+let split1 = split |> Seq.head
+
+let finalShoal = tick split1 256
+
+let total  = finalShoal |> Seq.length
+total
+
+#!markdown
+
+part 2 - switch to using a state register rather than building lists - less mem and more performant
+
+#!fsharp
+
+let exampleData = [ 3L; 4L; 3L; 1L; 2L ]
+
+let input = [4L;1L;1L;4L;1L;2L;1L;4L;1L;3L;4L;4L;1L;5L;5L;1L;3L;1L;1L;1L;4L;4L;3L;1L;5L;3L;1L;2L;5L;1L;1L;5L;1L;1L;4L;1L;1L;1L;1L;2L;1L;5L;3L;4L;4L;1L;1L;1L;1L;1L;1L;1L;1L;1L;2L;1L;1L;1L;1L;1L;5L;1L;1L;1L;4L;1L;2L;3L;5L;1L;2L;2L;4L;1L;4L;4L;4L;1L;2L;5L;1L;2L;1L;1L;1L;1L;1L;1L;4L;1L;1L;4L;3L;4L;2L;1L;3L;1L;1L;1L;3L;5L;5L;4L;3L;4L;1L;5L;1L;1L;1L;2L;2L;1L;3L;1L;2L;4L;1L;1L;3L;3L;1L;3L;3L;1L;1L;3L;1L;5L;1L;1L;3L;1L;1L;1L;5L;4L;1L;1L;1L;1L;4L;1L;1L;3L;5L;4L;3L;1L;1L;5L;4L;1L;1L;2L;5L;4L;2L;1L;4L;1L;1L;1L;1L;3L;1L;1L;1L;1L;4L;1L;1L;1L;1L;2L;4L;1L;1L;1L;1L;3L;1L;1L;5L;1L;1L;1L;1L;1L;1L;4L;2L;1L;3L;1L;1L;1L;2L;4L;2L;3L;1L;4L;1L;2L;1L;4L;2L;1L;4L;4L;1L;5L;1L;1L;4L;4L;1L;2L;2L;1L;1L;1L;1L;1L;1L;1L;1L;1L;1L;1L;4L;5L;4L;1L;3L;1L;3L;1L;1L;1L;5L;3L;5L;5L;2L;2L;1L;4L;1L;4L;2L;1L;4L;1L;2L;1L;1L;2L;1L;1L;5L;4L;2L;1L;1L;1L;2L;4L;1L;1L;1L;1L;2L;1L;1L;5L;1L;1L;2L;2L;5L;1L;1L;1L;1L;1L;2L;4L;2L;3L;1L;2L;1L;5L;4L;5L;1L;4]
+
+type FishState = {Zero: int64; One: int64; Two: int64; Three: int64; Four: int64; Five: int64; Six: int64; Seven: int64; Eight: int64}
+
+let stateToString (state: FishState) =
+    printfn "%i %i %i %i %i %i %i %i %i" state.Zero state.One state.Two state.Three state.Four state.Five state.Six state.Seven state.Eight
+
+let FishTotal state = 
+    state.Zero + state.One + state.Two + state.Three + state.Four + state.Five + state.Six + state.Seven + state.Eight
+
+let rec stateLoad (data: int64 list) state = 
+    match data with
+    | [] -> state
+    | head :: tail -> 
+        match head with
+        | 0L -> stateLoad tail  {state with Zero = state.Zero + 1L}
+        | 1L -> stateLoad tail  {state with One = state.One + 1L}
+        | 2L -> stateLoad tail  {state with Two = state.Two + 1L}
+        | 3L -> stateLoad tail  {state with Three = state.Three + 1L}
+        | 4L -> stateLoad tail  {state with Four = state.Four + 1L}
+        | 5L -> stateLoad tail  {state with Five = state.Five + 1L}
+        | 6L -> stateLoad tail  {state with Six = state.Six + 1L}
+        | 7L -> stateLoad tail  {state with Seven = state.Seven + 1L}
+        | 8L -> stateLoad tail  {state with Eight = state.Eight + 1L}
+
+
+let rec solve  (days:int) (state: FishState)=
+    // each day the counts in each slot move down - number of zeros gets added to the eight slot
+    //Console.WriteLine(state |> stateToString)  
+    match days with 
+    | 0 -> state
+    | _ -> 
+        //Console.WriteLine(state |> stateToString)    
+        let newState = {state with Zero = state.One; One = state.Two; Two = state.Three; Three = state.Four; Four = state.Five; Five = state.Six; Six = state.Seven + state.Zero; Seven = state.Eight; Eight = state.Zero}
+        solve (days - 1) newState
+    
+
+let initialState = stateLoad input {Zero = 0; One = 0; Two = 0; Three = 0; Four = 0; Five = 0; Six = 0; Seven = 0; Eight = 0}
+
+initialState |> solve 256 |> FishTotal
